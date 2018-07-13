@@ -1,6 +1,15 @@
 import * as React from "react";
-import { inject } from "mobx-react";
-import { Container, Content, Text } from "native-base";
+import { inject, observer } from "mobx-react";
+import {
+  Container,
+  Content,
+  Text,
+  Form,
+  Item,
+  Input,
+  Label,
+  Button
+} from "native-base";
 import { NavigationDescriptor } from "react-navigation";
 
 import GoalList from "../state/Goal/GoalList";
@@ -9,10 +18,23 @@ interface ProvidedProps {
   goalList?: GoalList;
 }
 
+interface State {
+  description: string;
+}
+
 @inject("goalList")
-export default class AddGoalScreen extends React.Component<ProvidedProps> {
+@observer
+export default class AddGoalScreen extends React.Component<
+  ProvidedProps,
+  State
+> {
   static navigationOptions = {
-    title: "Add New Goal"
+    title: "Add New Goal",
+    headerRight: (
+      <Button transparent onPress={() => {}}>
+        <Text>Done</Text>
+      </Button>
+    )
   };
 
   render() {
@@ -25,7 +47,12 @@ export default class AddGoalScreen extends React.Component<ProvidedProps> {
     return (
       <Container>
         <Content>
-          <Text>Hello world!</Text>
+          <Form>
+            <Item stackedLabel>
+              <Label>Description</Label>
+              <Input value={this.state.description} />
+            </Item>
+          </Form>
         </Content>
       </Container>
     );

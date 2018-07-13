@@ -5,12 +5,16 @@ import { createStackNavigator } from "react-navigation";
 import GoalList from "./state/Goal/GoalList";
 import Goal from "./state/Goal/Goal";
 import HomeScreen from "./components/HomeScreen";
+import AddGoalScreen from "./components/AddGoalScreen";
 
 const goalStore = new GoalList([new Goal("Foo"), new Goal("Bar")]);
 
 const RootStack = createStackNavigator({
   Home: {
     screen: HomeScreen
+  },
+  AddGoal: {
+    screen: AddGoalScreen
   }
 });
 

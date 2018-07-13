@@ -1,20 +1,7 @@
 import * as React from "react";
 import { observer, inject } from "mobx-react";
-import {
-  Container,
-  Header,
-  CheckBox,
-  Content,
-  Button,
-  Text,
-  Title,
-  List,
-  ListItem,
-  Body,
-  Left,
-  Right,
-  Icon
-} from "native-base";
+import { Container, Content, Button, Icon, Text } from "native-base";
+import { NavigationDescriptor } from "react-navigation";
 
 import GoalList from "../state/Goal/GoalList";
 import GoalListView from "./GoalListView";
@@ -25,6 +12,15 @@ interface ProvidedProps {
 
 @inject("goalList")
 export default class HomeScreen extends React.Component<ProvidedProps> {
+  static navigationOptions = ({ navigation }: NavigationDescriptor) => ({
+    title: "Home",
+    headerRight: (
+      <Button transparent onPress={() => navigation.navigate("AddGoal")}>
+        <Text>Add</Text>
+      </Button>
+    )
+  });
+
   render() {
     const { goalList } = this.props;
 
@@ -34,17 +30,6 @@ export default class HomeScreen extends React.Component<ProvidedProps> {
 
     return (
       <Container>
-        <Header>
-          <Left />
-          <Body>
-            <Title>Header</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="add" />
-            </Button>
-          </Right>
-        </Header>
         <Content>
           <GoalListView goalList={goalList} />
         </Content>

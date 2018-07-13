@@ -1,47 +1,25 @@
 import * as React from "react";
-import {
-  Container,
-  Header,
-  Content,
-  Button,
-  Text,
-  Title,
-  List,
-  ListItem,
-  Body,
-  Left,
-  Right,
-  Icon
-} from "native-base";
+import { Provider } from "mobx-react";
+import { createStackNavigator } from "react-navigation";
 
-import Goal from "./Goal";
+import GoalList from "./state/Goal/GoalList";
+import Goal from "./state/Goal/Goal";
+import HomeScreen from "./components/HomeScreen";
+
+const goalStore = new GoalList([new Goal("Foo"), new Goal("Bar")]);
+
+const RootStack = createStackNavigator({
+  Home: {
+    screen: HomeScreen
+  }
+});
 
 export default class App extends React.Component<{}> {
   render() {
-    const goals: Goal[] = [new Goal("Foo")];
     return (
-      <Container>
-        <Header>
-          <Left />
-          <Body>
-            <Title>Header</Title>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon name="add" />
-            </Button>
-          </Right>
-        </Header>
-        <Content>
-          <List>
-            {goals.map((goal: Goal) => (
-              <ListItem>
-                <Text>goal.title</Text>
-              </ListItem>
-            ))}
-          </List>
-        </Content>
-      </Container>
+      <Provider goalList={goalStore}>
+        <RootStack />
+      </Provider>
     );
   }
 }
